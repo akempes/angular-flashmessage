@@ -7,7 +7,7 @@
   ],
   "description": "A simple, lightweight (0.6 kb minified) and flexible package to show flashmessage.",
   "main": [
-    "src/flashmessage.js"
+    "src/flashmessage.js",
     "src/flashmessage.css"
   ],
   "ignore": [],
