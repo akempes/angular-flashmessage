@@ -2,7 +2,7 @@
 
 A simple, lightweight (0.6 kb minified) and flexible package to show flash message.
 
-Watch the demo at [http://akempes.github.io/angular-flashmessage/]()
+Watch the demo at [http://akempes.github.io/angular-flashmessage/](http://akempes.github.io/angular-flashmessage/)
 
 ## Getting Started
 
