@@ -1,0 +1,2 @@
+<strong>{{msg.type}}:</strong> <span class="flash-message-body" ng-bind-html="msg.data.message | allowHtmlInMessage"></span>
+<span class="flash-message-close" ng-if="msg.showClose" ng-click="msg.close('close')">Dismiss</span>

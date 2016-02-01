@@ -1,0 +1,3 @@
+<ol class="flash-message-wrapper custom-styling">
+    <li ng-repeat="msg in messages | filter:restrictTypes" ng-include="msg.template" ng-click="msg.close('clickToClose')" class="flash-message-item flash-message-{{msg.type}}"></li>
+</ol>

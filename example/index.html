@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html data-ng-app="exampleApp">
+    <head class="ng-cloak">
+
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
+        
+        <script src="../dist/flashmessage.js" type="text/javascript"></script>
+        <link href="../dist/flashmessage.css" rel="stylesheet">
+
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <script src="example.js" type="text/javascript"></script>
+        <style type="text/css">
+            .stack-messages .flash-message-item{
+                left: 0;
+                position: fixed;
+                right: 0;
+                z-index: 1000;
+            }
+        </style>
+    </head>
+
+    <body class="ng-cloak container" ng-controller="ExampleBaseController">
+        <div flash-message class="stack-messages"></div>
+
+        <div class="navbar navbar-inverse">
+            <div class="navbar-inner">
+                <a class="brand" href="https://github.com/akempes/angular-flashMessage">Angular-flashmessage - Examples</a>
+            </div>
+        </div>
+
+        <h1>Examples</h1>
+
+        <p>
+            Success messages will, by default, close automatically after 3 seconds. To close a message just click on the message body or close button. All features and configuration options are documented in the readme. 
+        </p>
+
+        <h3>Trigger Messages</h3>
+        <h4>Simple Messages</h4>
+
+        <a ng-click="successFlashMessage()">Success flash message</a> <small>(Will disappear after 3 seconds by default configuration.)</small><br/>
+        <a ng-click="errorFlashMessage()">Error flash message</a><br/>
+        <a ng-click="warningFlashMessage()">Warning flash message</a><br/>
+        <a ng-click="infoFlashMessage()">Info flash message</a><br/>
+        <br/>
+<pre>flashMessage.success('Your message here.');
+flashMessage.error('Your message here.');
+flashMessage.warning('Your message here.');
+flashMessage.info('Your message here.');</pre>
+        <h4>Advanced Messages</h4>
+
+        <a ng-click="infoFlashMessageWithPromise()">Info flash message with promise</a> <small>(Resolve the promise by clicking on the message or close button.) <a ng-click="showCode.infoWithPromise = !showCode.infoWithPromise">Show / Hide code</a></small><br/>
+<pre ng-show="showCode.infoWithPromise">
+flashMessage.info('Your message here.').then(function () {
+    // Anything you want to do when the message is closed.
+});
+</pre>
+
+         <a ng-click="fullFeatureFlashMessage()">Full Feature Flash Message</a> <small>(Please check the documentation.) <a ng-click="showCode.fullFeature = !showCode.fullFeature">Show / Hide code</a></small><br/>
+<pre ng-show="showCode.fullFeature">$scope.fullFeatureFlashMessage = function () {
+    
+    var data = {                            // Your data object, this can be anything you like.
+        title   : 'Full feature message',
+        message : 'But wait... there is more! Objects are also supported too.',
+        note    : 'You only have to modify the template. See the section "Configuration" in the readme file.'
+    },
+    persist      = 1,                       // The number of events that your message has to 'survive'.
+    delay        = 6000,                    // The time your message is visible in miliseconds. (Now 6 seconds.) Use a number < 1 to disable.
+    showClose    = false,                   // Hide the close button. (Note that this feature is located in the template. When using a custom design make sure to use: ng-if="msg.showClose")
+    template     = 'custom-message.html',   // Specify your custom template.
+    clickToClose = false;                   // Disable the click event on the message(body) (This option will not affect the close button.)
+
+    flashMessage.warning(data, persist, delay, showClose, template, clickToClose).then(function () {
+        alert('All features are shown now... Please also check the configuration documentation in the readme file.');
+    });
+};</pre>
+       
+        <a ng-click="customFlashMessageType()">Custom flash message type</a> <small>(Please check the documentation.) <a ng-click="showCode.customType = !showCode.customType">Show / Hide code</a></small><br/>
+<pre ng-show="showCode.customType">// Definition in app config
+flashMessageProvider.setType('myMissingMessageType');</pre>
+<pre ng-show="showCode.customType">// In controller
+flashMessage.myMissingMessageType('Your message here.');</pre>
+
+ <a ng-click="presistendFlashMessage()">Remove flash message after 3 events</a> <small>(By default pagiation events are used.) <a ng-click="showCode.presitendMessage = !showCode.presitendMessage">Show / Hide code</a></small> <input type="button" ng-click="triggerEvent()" value="Trigger Event"><br/>
+<pre ng-show="showCode.presitendMessage">flashMessage.warning('Your message here.', 3);</pre>
+
+        <h3>Directive</h3>
+        <h4>Show all message types</h4>
+        <pre><div flash-message></div></pre>
+        <div flash-message></div>
+        
+        <h4>Show only success and info messages</h4>
+        <pre><div flash-message="success,info"></div></pre>
+        <div flash-message="success,info"></div>
+
+        <h4>Show messages in custom wrapper via directive</h4>
+        <pre><div flash-message flash-message-template="custom-wrapper.html"></div></pre>
+<pre><style type="text/css">
+    .custom-styling{
+        width: 300px;   
+    }
+    .custom-styling .flash-message-item{
+        background: none;
+    }
+</style></pre>
+        <div flash-message flash-message-template="custom-wrapper.html"></div>
+
+
+        <style type="text/css">
+            .custom-styling{
+                width: 300px;   
+            }
+            .flash-message-myMissingMessageType{
+                background-color: white;
+            }
+        </style>
+
+        <script>
+
+            //Not part of the directive, this is just to show the used HTML code
+
+            (function () {
+
+                function html(s) {
+                    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                }
+
+                var elements = document.getElementsByTagName('pre');
+                for (var i = 0; i < elements.length; i++) {
+                    elements[i].innerHTML = html(elements[i].innerHTML);
+                };
+
+            })();
+        </script>
+
+    </body>
+</html>
