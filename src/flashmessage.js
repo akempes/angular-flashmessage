@@ -52,7 +52,7 @@ module
         options = angular.extend(options, data);
     };
 
-    this.$get = ['$q', '$timeout', '$rootScope', function( $q, $timeout, $rootScope ) {
+    this.$get = ['$q', '$interval', '$rootScope', function( $q, $interval, $rootScope ) {
         
         var me = {},
         getValue = function(data) {
@@ -108,12 +108,14 @@ module
                         var indexMsg = me.messages.map(function(x){ return x.$$hashKey; }).indexOf(msg.$$hashKey);
                         me.messages.splice(indexMsg, 1);
 
+                        $interval.cancel(me.timeout);
+
                         msg.defer.resolve({result:data, msg:msg});
                     }
                 };
 
                 if(msg.delay && msg.delay > 0){
-                    msg.timeout = $timeout(function(){ msg.close('timedout'); }, msg.delay);
+                    msg.timeout = $interval(function(){ msg.close('timedout'); }, msg.delay);
                 }
 
                 me.messages.push(msg);
