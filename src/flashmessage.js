@@ -55,6 +55,15 @@ module
     this.$get = ['$q', '$timeout', '$rootScope', function( $q, $timeout, $rootScope ) {
         
         var me = {},
+        getValue = function(data) {
+            var i;
+            for ( i = 0; i < data.length; i+=1) {
+                if(data[i] !== undefined){
+                    return data[i];
+                }
+            }
+            return undefined;
+        },
         updatePersistence = function function_name (amount) {
             angular.forEach(me.messages, function(msg){
                 msg.persist_counter += amount;
@@ -85,12 +94,12 @@ module
                     type            : item.type,
                     data            : data,
                     defer           : $q.defer(),
-                    persist         : persist || types[index].persist || options.persist || 0,
-                    persist_counter : persist || types[index].persist || options.persist || 0,
-                    delay           : delay || types[index].delay || options.delay || 0,
-                    template        : template || types[index].template || options.template || 0,
-                    clickToClose    : clickToClose || types[index].clickToClose || options.clickToClose || 0,
-                    showClose       : showClose || types[index].showClose || options.showClose || 0,
+                    persist         : getValue([ persist, types[index].persist, options.persist, 0 ]),
+                    persist_counter : getValue([ persist, types[index].persist, options.persist, 0 ]),
+                    delay           : getValue([ delay, types[index].delay, options.delay, 0 ]),
+                    template        : getValue([ template, types[index].template, options.template, 0 ]),
+                    clickToClose    : getValue([ clickToClose, types[index].clickToClose, options.clickToClose, 0 ]),
+                    showClose       : getValue([ showClose, types[index].showClose, options.showClose, 0 ]),
                     close           : function (data) {
                         if(data==='clickToClose' && !msg.clickToClose){
                             return;
