@@ -108,7 +108,9 @@ myApp.config(['flashMessageProvider', function (flashMessageProvider) {
 	showClose    = true, // Optional
 	clickToClose = true; // Optional
 
-    flashMessageProvider.setType(type, persist, delay, template, showClose, clickToClose);
+    flashMessageProvider
+    	.setType(type, persist, delay, template, showClose, clickToClose)
+        .setConfig( { useTranslation: false } )
 }]);
 ```
 
@@ -172,6 +174,10 @@ Show the close button in the message template.
 *Default: true*  
 Allow users to click on the message body to close them.
 
+**useTranslation** (Boolean)  
+*Default: false*  
+Many sites are using the angular-translate module, then this option is set to `true` you can just pass the translation key string.
+
 ```js
 myApp.config(['flashMessageProvider', function (flashMessageProvider) {
 
@@ -183,7 +189,8 @@ myApp.config(['flashMessageProvider', function (flashMessageProvider) {
         wrapperTemplate : 'flashMessage/wrapper.html',
         template        : 'flashMessage/message.html',
         showClose       : true,
-        clickToClose    : true
+        clickToClose    : true,
+        useTranslation  : false
     });
 
 }]);
@@ -196,14 +203,15 @@ Out of the box are 4 message types predefined: Success, Error, Warning and Info.
 ```js
 myApp.config(['flashMessageProvider', function (flashMessageProvider) {
 	
-	var type     = 'myMissingMessageType', 			// Required
-	persist      = 0, 								// Optional
-	delay        = 0, 								// Optional
-	template     = 'flashMessage/message.html', 	// Optional
-	showClose    = true, 							// Optional
-	clickToClose = true; 							// Optional
+	var type       = 'myMissingMessageType', 		// Required
+	persist        = 0, 							// Optional
+	delay          = 0, 							// Optional
+	template       = 'flashMessage/message.html', 	// Optional
+	showClose      = true, 							// Optional
+	clickToClose   = true; 							// Optional
+	useTranslation = true; 							// Optional
 
-    flashMessageProvider.setType(type, persist, delay, template, showClose, clickToClose);
+    flashMessageProvider.setType(type, persist, delay, template, showClose, clickToClose, useTranslation);
 }]);
 ```
 Only the **type** is required. This is the name of your custom message type. Only alphanumeric values are allowed. The other parameters are optional. If not specified the defaults are used.
