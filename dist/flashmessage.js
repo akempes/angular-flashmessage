@@ -10,7 +10,8 @@ angular.module('flashMessage', ['ng'])
         wrapperTemplate : 'flashMessage/wrapper.html',
         template        : 'flashMessage/message.html',
         showClose       : true,
-        clickToClose    : true
+        clickToClose    : true,
+        useTranslation  : false
     },
     types = [
         { 
@@ -45,10 +46,13 @@ angular.module('flashMessage', ['ng'])
             types[index] = item;
         }
 
+        return this;
     };
 
     this.setConfig = function (data) {
         options = angular.extend(options, data);
+
+        return this;
     };
 
     this.$get = ['$q', '$interval', '$rootScope', function( $q, $interval, $rootScope ) {
@@ -79,7 +83,7 @@ angular.module('flashMessage', ['ng'])
         };
 
         angular.forEach(types, function (item) {
-            me[item.type] = function (data, persist, delay, showClose, template, clickToClose) {
+            me[item.type] = function (data, persist, delay, showClose, template, clickToClose, useTranslation) {
 
                 var index = types.map(function(x){ return x.type; }).indexOf(item.type),
                 msg;
@@ -99,6 +103,8 @@ angular.module('flashMessage', ['ng'])
                     template        : getValue([ template, types[index].template, options.template, 0 ]),
                     clickToClose    : getValue([ clickToClose, types[index].clickToClose, options.clickToClose, 0 ]),
                     showClose       : getValue([ showClose, types[index].showClose, options.showClose, 0 ]),
+                    useTranslation  : getValue([ useTranslation, types[index].useTranslation, options.useTranslation, false ]),
+
                     close           : function (data) {
                         if(data==='clickToClose' && !msg.clickToClose){
                             return;
@@ -184,7 +190,8 @@ angular.module('flashMessage', ['ng'])
 
     $templateCache.put('flashMessage/message.html',
 
-        '<span class="flash-message-body" ng-bind-html="msg.data | allowHtmlInMessage"></span>' +
+        '<span class="flash-message-body" ng-if="!msg.useTranslation" ng-bind-html="msg.data | allowHtmlInMessage"></span>' +
+        '<span class="flash-message-body" ng-if="msg.useTranslation"  ng-bind-html="msg.data | translate | allowHtmlInMessage"></span>' +
         '<span class="flash-message-close flash-message-clickable" ng-if="msg.showClose" ng-click="msg.close(\'close\')">&times;</span>'
 
     );
