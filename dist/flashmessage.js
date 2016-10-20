@@ -1,6 +1,5 @@
-var module = angular.module('flashMessage', ['ng']);
+angular.module('flashMessage', ['ng'])
 
-module
 .provider('flashMessage', [ function( ) {
     'use strict';
 
