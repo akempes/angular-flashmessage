@@ -46,10 +46,13 @@ module
             types[index] = item;
         }
 
+        return this;
     };
 
     this.setConfig = function (data) {
         options = angular.extend(options, data);
+
+        return this;
     };
 
     this.$get = ['$q', '$interval', '$rootScope', function( $q, $interval, $rootScope ) {
